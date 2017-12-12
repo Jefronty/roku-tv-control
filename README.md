@@ -13,8 +13,9 @@ For example:
 the rokuTV IP might be 192.168.0.102  
 the broadcast IP would be 192.168.0.255  
   
-ie.  
+  
+Some example uses.  
 python control.py power //turn the TV on or off  
 python control.py 12 // launch the an app by ID  
 python control.py vudu // launch the an app by name  
-
+python control.py left // navigate the menu
