@@ -5,6 +5,8 @@ control your Roku TV by passing arguments to this Python script
 
 it does require some minor configuration.  The IP address and mac address of your Roku device should be added to the rokuTV dict  
 and your local broadcast IP address needs to be added to the wol dict.  
+The mac address is needed to turn on the TV, if it has been off long enough that it is unable to accept API requests.  
+That and the broadcast IP allow it to be turned on via a WOL packet.  
 Broadcast IP addresses usually look like normal IP addresses on the network only they end with 255  
   
 For example:
