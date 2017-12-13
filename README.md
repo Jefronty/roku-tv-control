@@ -16,7 +16,7 @@ the broadcast IP would be *192.168.0.255*
 
 To change the `apps` dictionary you can get a list of installed apps as XML includeing the name and ID number of every app by
 `curl http://roku_ip:8060/query/apps'  
- *Calling and parsing the XML file could buid the `app` dict dynamically but I chose to use a static variable*
+ _Calling and parsing the XML file could buid the `app` dict dynamically but I chose to use a static variable_
   
 Some example uses.  
 `python control.py power` //toggle the TV on or off  
