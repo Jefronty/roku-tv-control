@@ -20,6 +20,6 @@ _Calling and parsing the XML file could buid the `app` dict dynamically but I ch
   
 Some example uses.  
 `python control.py power` //toggle the TV on or off  
-`python control.py 12` // launch the an app by ID  
-`python control.py vudu` // launch the an app by name  
+`python control.py 12` // launch an app by ID  
+`python control.py vudu` // launch an app by name  
 `python control.py left` // navigate the menu
