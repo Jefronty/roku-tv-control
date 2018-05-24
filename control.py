@@ -39,21 +39,30 @@ buttons = ['back', 'backspace', 'down', 'enter', 'forward',
  'volumemute', 'volumeup']
 
 apps = {'netflix': '12', 'vudu': '13842', 'dlna': '2213',
- 'fox-sports': '95307', 'espn': '34376', 'abc': '73376',
- 'hdmi1': 'tvinput.hdmi1', 'hdmi2': 'tvinput.hdmi2',
- 'hdmi3': 'tvinput.hdmi3', 'rca': 'tvinput.cvbs'}
+ 'fox-sports': '95307', 'espn': '34376', 'abc': '73376'}
 
-aliases = {'ok': 'select', 'mute': 'volumemute'}
+aliases = {'ok': 'select', 'mute': 'volumemute', 'tvinput.hdmi1': 'InputHDMI1',
+ 'tvinput.hdmi2': 'InputHDMI2', 'tvinput.hdmi3': 'InputHDMI3',
+ 'tvinput.cvbs': 'InputAV1', 'tvinput.dtv': 'InputTuner',
+ 'hdmi1': 'InputHDMI1', 'hdmi2': 'InputHDMI2', 'hdmi3': 'InputHDMI3',
+ 'rca': 'InputAV1', 'tuner': 'InputTuner', 'antenna': 'InputTuner'}
 
 """
 the argument is checked
+ if it starts with LIT_, type character,
  if it is a number, launch an app using the app ID,
  if it is a string in the buttons list, keypress event is triggered
  if it is a string found as a key in the alias dict, trigger associated keypress
  if it is a string found as a key in the apps dict, launch the app
  if it is not any of the above, return 'fail'
 """
-if re.match('^\d+$', arg):
+if re.match('^lit_.$', arg, re.IGNORECASE):
+	try:
+		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/keypress/'+ arg
+		r = requests.post(url,timeout=2)
+	except requests.Timeout:
+		print 'API failed'
+elif re.match('^\d+$', arg):
 	try:
 		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/launch/'+ arg
 		r = requests.post(url,timeout=2)
