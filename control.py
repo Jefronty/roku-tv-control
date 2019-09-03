@@ -12,9 +12,9 @@ rokuTV = {'mac': '00:11:22:33:aa:bb',
 'ip': '192.168.0.10',
 'port': '8060'}
 
-# Wake-on-LAN info, ip is the local broadcast IP
+# Wake-on-LAN info, bcip is the local broadcast IP
 wol = {'port': 9,
-'ip': '192.168.0.255'}
+'bcip': '192.168.0.255'}
 
 # after being off for a while http is unavailable so use WOL
 def wolRoku():
@@ -30,7 +30,7 @@ def wolRoku():
 
 	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-	sock.sendto(packet, (wol['ip'], wol['port']))
+	sock.sendto(packet, (wol['bcip'], wol['port']))
 
 
 buttons = ['back', 'backspace', 'down', 'enter', 'forward',
@@ -38,9 +38,13 @@ buttons = ['back', 'backspace', 'down', 'enter', 'forward',
  'reverse', 'right', 'search', 'select', 'up', 'volumedown',
  'volumemute', 'volumeup']
 
+# list of app names for easy launching, the ID numbers can be
+# found from a /query/apps API call
 apps = {'netflix': '12', 'vudu': '13842', 'dlna': '2213',
  'fox-sports': '95307', 'espn': '34376', 'abc': '73376'}
 
+# alternative names for common inputs
+# the tvinput.* keys are how the apps list labels the physical inputs
 aliases = {'ok': 'select', 'mute': 'volumemute', 'tvinput.hdmi1': 'InputHDMI1',
  'tvinput.hdmi2': 'InputHDMI2', 'tvinput.hdmi3': 'InputHDMI3',
  'tvinput.cvbs': 'InputAV1', 'tvinput.dtv': 'InputTuner',
@@ -57,18 +61,21 @@ the argument is checked
  if it is not any of the above, return 'fail'
 """
 if re.match('^lit_.$', arg, re.IGNORECASE):
+	# character input for searches
 	try:
 		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/keypress/'+ arg
 		r = requests.post(url,timeout=2)
 	except requests.Timeout:
 		print 'API failed'
 elif re.match('^\d+$', arg):
+	# launch app by given ID number
 	try:
 		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/launch/'+ arg
 		r = requests.post(url,timeout=2)
 	except requests.Timeout:
 		print 'API failed attempting to launch App #'+arg
 elif arg in buttons:
+	# argument found in button name dict
 	try:
 		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/keypress/'+ arg
 		r = requests.post(url,timeout=2)
@@ -78,12 +85,14 @@ elif arg in buttons:
 			print 'trying WOL'
 			wolRoku()
 elif arg in aliases:
+	# argueent found in aliases dict
 	try:
 		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/keypress/'+ aliases[arg]
 		r = requests.post(url,timeout=2)
 	except requests.Timeout:
 		print 'API failed'
 elif arg in apps:
+	# app name given, launch app by associated ID
 	try:
 		url = 'http://'+ rokuTV['ip'] +':'+ rokuTV['port'] +'/launch/'+ apps[arg]
 		r = requests.post(url,timeout=2)
