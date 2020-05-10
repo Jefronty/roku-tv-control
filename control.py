@@ -34,7 +34,7 @@ def wolRoku():
 
 
 buttons = ['back', 'backspace', 'down', 'enter', 'forward',
- 'home', 'info', 'left', 'literal', 'play', 'power', 'replay',
+ 'home', 'info', 'left', 'literal', 'play', 'power', 'InstantReplay',
  'reverse', 'right', 'search', 'select', 'up', 'volumedown',
  'volumemute', 'volumeup']
 
@@ -49,7 +49,8 @@ aliases = {'ok': 'select', 'mute': 'volumemute', 'tvinput.hdmi1': 'InputHDMI1',
  'tvinput.hdmi2': 'InputHDMI2', 'tvinput.hdmi3': 'InputHDMI3',
  'tvinput.cvbs': 'InputAV1', 'tvinput.dtv': 'InputTuner',
  'hdmi1': 'InputHDMI1', 'hdmi2': 'InputHDMI2', 'hdmi3': 'InputHDMI3',
- 'rca': 'InputAV1', 'tuner': 'InputTuner', 'antenna': 'InputTuner'}
+ 'rca': 'InputAV1', 'tuner': 'InputTuner', 'antenna': 'InputTuner',
+ 'replay': 'InstantReplay'}
 
 """
 the argument is checked
